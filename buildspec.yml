@@ -1,0 +1,32 @@
+
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+  pre_build:
+    commands:
+      # Install kubectl
+      curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+      chmod +x ./kubectl
+      mv ./kubectl /usr/local/bin/kubectl
+      # Install dependencies and build React app
+      cd moogle-kubernetes
+      npm install
+      npm run build
+  build:
+    commands:
+      # Build Docker image
+      docker build -t mooglelabs .
+      # Push Docker image to ECR
+      aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 741979147734.dkr.ecr.us-east-1.amazonaws.com
+      docker push 741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs:latest
+  post_build:
+    commands:
+      # Deploy to EKS cluster using kubectl
+      aws eks --region us-east-1 update-kubeconfig  --name terraform-eks-demo
+      kubectl apply -f SampleApp.yaml
+  artifacts:
+    files:
+      - SampleApp.yaml
