@@ -17,7 +17,7 @@ phases:
       - docker push 741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs:latest
   post_build:
     commands:
-      - aws eks --region us-east-1 update-kubeconfig  --name terraform-eks-demo
+      - aws eks --region us-west-2 update-kubeconfig  --name terraform-eks-demo
       - kubectl apply -f SampleApp.yaml
 artifacts:
   files:
