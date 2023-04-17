@@ -7,10 +7,8 @@ phases:
       - curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
       - chmod +x ./kubectl
       - mv ./kubectl /usr/local/bin/kubectl
-      - npm install
   pre_build:
     commands:
-      - npm run build
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 741979147734.dkr.ecr.us-east-1.amazonaws.com
   build:
     commands:
