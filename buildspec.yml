@@ -8,9 +8,9 @@ phases:
       - chmod +x ./kubectl
       - mv ./kubectl /usr/local/bin/kubectl
       - npm install
-      - npm run build
   pre_build:
     commands:
+      - npm run build
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 741979147734.dkr.ecr.us-east-1.amazonaws.com
   build:
     commands:
