@@ -22,7 +22,7 @@ phases:
       - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
       - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
       - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
-      - kubectl config use-context terraform-eks-demo
+      - kubectl config current-context
       - kubectl cluster-info
       - aws eks --region us-west-2 update-kubeconfig  --name terraform-eks-demo --role-arn arn:aws:eks:us-west-2:741979147734:cluster/terraform-eks-demo
       - cat ~/.kube/config
