@@ -17,8 +17,14 @@ phases:
       - docker push 741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs:latest
   post_build:
     commands:
+      - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_KUBECTL_ROLE_ARN --role-session-name codebuild-kubectl --duration-seconds 900)
+      - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
+      - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
+      - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
+      - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
       - aws eks --region us-west-2 update-kubeconfig  --name terraform-eks-demo
       - kubectl apply -f SampleApp.yaml
+      - printf '[{"name":"SampleApp","imageUri":"741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs"}]' 741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs:latest > kube-SampleApp.json
 artifacts:
   files:
-    - SampleApp.yaml
+    - kube-SampleApp.json
