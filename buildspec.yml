@@ -25,7 +25,7 @@ phases:
       - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
       - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
       - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
-      - aws eks --region us-west-2 update-kubeconfig  --name terraform-eks-demo --role-arn arn:aws:eks:us-east-2:741979147734:cluster/terraform-eks-demo
+      - aws eks --region us-east-2 update-kubeconfig  --name terraform-eks-demo --role-arn arn:aws:eks:us-east-2:741979147734:cluster/terraform-eks-demo
       - cat ~/.kube/config
       - aws sts get-caller-identity
       - kubectl apply -f SampleApp.yaml
