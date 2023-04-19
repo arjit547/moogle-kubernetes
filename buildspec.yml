@@ -4,9 +4,6 @@ phases:
     runtime-versions:
       nodejs: 12
     commands:
-      - apt-get update
-      - apt-get install -y python3-pip
-      - pip3 install awscli
       - curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.22.2/2022-01-31/bin/darwin/amd64/aws-iam-authenticator
       - chmod +x ./aws-iam-authenticator
       - sudo mv ./aws-iam-authenticator /usr/local/bin/
@@ -26,6 +23,7 @@ phases:
       - aws eks --region us-east-2 update-kubeconfig  --name terraform-eks-demo --role-arn arn:aws:eks:us-east-2:741979147734:cluster/terraform-eks-demo
       - cat ~/.kube/config
       - aws sts get-caller-identity
+      - kubectl config view --minify=true
       - kubectl apply -f SampleApp.yaml
       - printf '[{"name":"SampleApp.yaml","imageUri":"741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs"}]' 741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs:latest > SampleApp.yaml
 artifacts:
