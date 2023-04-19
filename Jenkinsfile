@@ -6,8 +6,6 @@ pipeline {
         ECR_REGISTRY = '741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs'
         IMAGE_TAG = '741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs:latest'
         KUBECONFIG_ID = 'my-kubeconfig'
-        AWS_ACCESS_KEY_ID = credentials('AKIA2ZQLHJXLJMH3TRGE')
-        AWS_SECRET_ACCESS_KEY = credentials('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')
     }
     stages {
         stage('Build Docker Image') {
