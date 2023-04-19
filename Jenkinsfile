@@ -17,7 +17,7 @@ pipeline {
                     sh "docker push 741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs:latest"
                 }
             }
-        }
+        
         stage('Deploy to EKS') {
             steps {
                 withCredentials([kubeconfigFile(credentialsId: "${KUBECONFIG_ID}", variable: 'KUBECONFIG')]) {
