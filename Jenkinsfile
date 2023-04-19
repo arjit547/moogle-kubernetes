@@ -3,15 +3,18 @@ pipeline {
     environment {
         AWS_DEFAULT_REGION = 'us-east-2'
         ECR_REPO = 'mooglelabs'
+        ECR_REGISTRY = '741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs'
         IMAGE_TAG = '741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs:latest'
         KUBECONFIG_ID = 'my-kubeconfig'
+        AWS_ACCESS_KEY_ID = credentials('your-aws-access-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('your-aws-secret-access-key')
     }
     stages {
         stage('Build Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'ecr-creds', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                    sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 741979147734.dkr.ecr.us-east-1.amazonaws.com"
                     sh "docker build -t mooglelabs ."
+                    sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 741979147734.dkr.ecr.us-east-1.amazonaws.com"
                     sh "docker tag mooglelabs:latest 741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs:latest"
                     sh "docker push 741979147734.dkr.ecr.us-east-1.amazonaws.com/mooglelabs:latest"
                 }
