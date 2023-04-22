@@ -3,10 +3,10 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-        AWS_DEFAULT_REGION = 'us-east-2'
-        ECR_REPO = 'seasia'
-        ECR_REGISTRY = '741979147734.dkr.ecr.us-east-2.amazonaws.com/seasia'
-        IMAGE_TAG = '741979147734.dkr.ecr.us-east-2.amazonaws.com/seasia:latest'
+        AWS_DEFAULT_REGION = 'us-east-1'
+        ECR_REPO = '	seasiam'
+        ECR_REGISTRY = '435770184212.dkr.ecr.us-east-1.amazonaws.com/seasiam'
+        IMAGE_TAG = '435770184212.dkr.ecr.us-east-1.amazonaws.com/seasiam:latest'
         KUBECONFIG_ID = 'my-kubeconfig'
     }
     stages {
@@ -14,10 +14,10 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'ecr-creds', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                     sh '''
-                     aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 741979147734.dkr.ecr.us-east-2.amazonaws.com
-                     docker build -t seasia .
-                     docker tag seasia:latest 741979147734.dkr.ecr.us-east-2.amazonaws.com/seasia:latest
-                     docker push 741979147734.dkr.ecr.us-east-2.amazonaws.com/seasia:latest
+                     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 435770184212.dkr.ecr.us-east-1.amazonaws.com
+                     docker build -t seasiam .
+                     docker tag seasiam:latest 435770184212.dkr.ecr.us-east-1.amazonaws.com/seasiam:latest
+                     docker push 435770184212.dkr.ecr.us-east-1.amazonaws.com/seasiam:latest
                     '''
                 }
             }
@@ -32,6 +32,7 @@ pipeline {
         }
     }
 }
+
 
 
 
