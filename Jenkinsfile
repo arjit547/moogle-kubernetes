@@ -24,6 +24,8 @@ pipeline {
             steps {
                 withAWS(credentials: 'my-aws-secret') {
                     withCredentials([file(credentialsId: "${KUBECONFIG_ID}", variable: 'KUBECONFIG')]) {
+                        sh "ls -l /path/to/kubeconfig"
+                        sh "chmod +w /path/to/kubeconfig"
                         sh "aws eks --region us-east-1 update-kubeconfig  --name terraform-eks-demo"
                         sh "kubectl apply -f SampleApp.yaml"
                         sh "kubectl apply -f Ingress.yaml"
