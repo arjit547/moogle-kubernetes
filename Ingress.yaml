@@ -9,7 +9,8 @@ metadata:
   name: ingress-2048
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
+    #alb.ingress.kubernetes.io/target-type: ip
+    kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/healthcheck-path: /health
 spec:
   ingressClassName: alb
