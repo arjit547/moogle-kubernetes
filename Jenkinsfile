@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         AWS_DEFAULT_REGION = 'us-east-1'
+        ROLE_NAME = 'arn:aws:iam::435770184212:role/eksctl-terraform-eks-demo-addon-iamserviceac-Role1-1HE98JTU95E2B'
         ECR_REPO = 'seasiam'
         ECR_REGISTRY = '435770184212.dkr.ecr.us-east-1.amazonaws.com/seasiam'
         IMAGE_TAG = '435770184212.dkr.ecr.us-east-1.amazonaws.com/seasiam:latest'
