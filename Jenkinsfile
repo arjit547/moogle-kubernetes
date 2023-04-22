@@ -23,6 +23,7 @@ pipeline {
         stage('Deploy to EKS') {
             steps {
                 withCredentials([file(credentialsId: "${KUBECONFIG_ID}", variable: 'KUBECONFIG')]) {
+                    sh "aws eks --region us-east-1 update-kubeconfig  --name terraform-eks-demo"
                     sh "kubectl apply -f SampleApp.yaml"
                     sh "kubectl apply -f Ingress.yaml"
                 }
