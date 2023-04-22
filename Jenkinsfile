@@ -22,12 +22,6 @@ pipeline {
         }
         stage('Deploy to EKS') {
             steps {
-              withCredentials([[
-                  credentialsId: "${AWS_CREDENTIALS_ID}",
-                  accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                  secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-                  sessionTokenVariable: 'AWS_SESSION_TOKEN',
-                  ]]){
                 withCredentials([file(credentialsId: "${KUBECONFIG_ID}", variable: 'KUBECONFIG')]) {
                     sh "kubectl apply -f SampleApp.yaml"
                     sh "kubectl apply -f Ingress.yaml"
