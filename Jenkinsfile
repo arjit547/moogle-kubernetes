@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Deploy to EKS') {
             steps {
-                withCredentials([(credentialsId: "${KUBECONFIG_ID}", variable: 'KUBECONFIG')]) {
+                withCredentials([kubeconfigFile(credentialsId: "${KUBECONFIG_ID}", variable: 'KUBECONFIG')]) {
                     sh "kubectl apply -f SampleApp.yaml"
                     sh "kubectl apply -f Ingress.yaml"
                 }
