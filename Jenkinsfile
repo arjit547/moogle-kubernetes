@@ -26,6 +26,8 @@ pipeline {
                     withCredentials([file(credentialsId: "${KUBECONFIG_ID}", variable: 'KUBECONFIG')]) {
                         sh "kubectl apply -f SampleApp.yaml"
                         sh "kubectl apply -f Ingress.yaml"
+                        sh "aws elbv2 modify-target-group --target-group-arn arn:aws:elasticloadbalancing:us-east-1:435770184212:targetgroup/k8s-game2048-service2-4e574f2e52/26fcb1d6dcc4c47f --health-check-path /health"
+                        sh "aws elbv2 modify-listener --listener-arn arn:aws:elasticloadbalancing:us-east-1:435770184212:listener/app/k8s-game2048-ingress2-4347728cc5/d6ea41e97386194f/9104941f86b3f97d --default-actions Type=forward,TargetGroupArn=arn:aws:elasticloadbalancing:us-east-1:435770184212:targetgroup/k8s-game2048-service2-4e574f2e52/26fcb1d6dcc4c47f"
                     }
                 }
             }
