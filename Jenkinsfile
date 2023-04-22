@@ -5,7 +5,7 @@ pipeline {
         ECR_REPO = '	seasiam'
         ECR_REGISTRY = '435770184212.dkr.ecr.us-east-1.amazonaws.com/seasiam'
         IMAGE_TAG = '435770184212.dkr.ecr.us-east-1.amazonaws.com/seasiam:latest'
-        KUBECONFIG_ID = 'my-kubeconfig'
+        KUBECONFIG_ID = 'config'
     }
     stages {
         stage('Build Docker Image') {
