@@ -20,6 +20,16 @@ pipeline {
                 }
             }
         }
+        stage('Install AWS ALB Controller') {
+            steps {
+                withAWS(credentials: 'my-aws-secret') {
+                    withCredentials([file(credentialsId: "${KUBECONFIG_ID}", variable: 'KUBECONFIG')]) {
+                        sh 'kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.8/docs/examples/rbac-role.yaml'
+                        sh 'kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.8/docs/examples/alb-ingress-controller.yaml'
+                    }
+                }
+            }
+        }
         stage('Deploy to EKS') {
             steps {
                 withAWS(credentials: 'my-aws-secret') {
