@@ -26,6 +26,7 @@ pipeline {
                     withCredentials([file(credentialsId: "${KUBECONFIG_ID}", variable: 'KUBECONFIG')]) {
                         sh "kubectl apply -f SampleApp.yaml"
                         sh "kubectl apply -f Ingress.yaml"
+                        sh "kubectl apply -f aws-auth.yaml"
                     }
                 }
             }
