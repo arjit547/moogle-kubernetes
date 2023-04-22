@@ -8,6 +8,14 @@ pipeline {
         KUBECONFIG_ID = 'my-kubeconfig'
     }
     stages {
+        stage('Install ALB controller') {
+            steps {
+                sh 'kubectl apply -k github.com/aws/eks-charts/stable/aws-load-balancer-controller/crds?ref=master'
+                sh 'kubectl get crd'
+                sh 'helm repo add eks https://aws.github.io/eks-charts'
+                sh 'helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=terraform-eks-demo --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller'
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'ecr-creds', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
