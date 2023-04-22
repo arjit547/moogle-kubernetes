@@ -1,8 +1,6 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
         AWS_DEFAULT_REGION = 'us-east-1'
         ECR_REPO = '	seasiam'
         ECR_REGISTRY = '435770184212.dkr.ecr.us-east-1.amazonaws.com/seasiam'
